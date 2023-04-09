@@ -31,7 +31,6 @@ f();
 
 console.log("bottom"); // 6
 
-
 //top
 //promise※
 //botttom

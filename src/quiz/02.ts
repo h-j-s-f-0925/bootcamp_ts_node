@@ -1,6 +1,6 @@
 // Q: FuncType という型を定義して、エラーを解消してください。
 // type 型に対する別名をつける
-type FuncType =(x: number) => number;
+type FuncType = (x: number) => number;
 
 // ここのエラーを解消する
 const addOne: FuncType = (x: number): number => x + 1;
@@ -31,7 +31,7 @@ const array1_3: Array1 = ["string", "is", "not", "allowed"];
 
 // Q: number か string が入る配列、Array2 を定義してください
 // type Array2 = (string | number)[];
-type Array2 = Array<string|number>;
+type Array2 = Array<string | number>;
 const array2_1: Array2 = [1, "string", 2, "is", 3, "allowed"];
 // @ts-expect-error boolean is not allowed for the `Array2`.
 const array2_2: Array2 = [true, false, true, false];

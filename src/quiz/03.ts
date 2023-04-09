@@ -20,8 +20,8 @@ const getStringLength = (s: string): StringLength => {
 // ヒント: Generics を使うと実現できます。
 
 // 以下の行を書き換えて型を与えてください。
-const includes = <T>(array: T[], value: T) : boolean=> {
-// function includes<T> (array: T[], value: T) : boolean {
+const includes = <T>(array: T[], value: T): boolean => {
+  // function includes<T> (array: T[], value: T) : boolean {
   // 変更箇所はこの上の行まで
   for (const v of array) {
     if (v === value) {
@@ -52,7 +52,10 @@ type PasswordRequirementResult =
   | "missingSmallLetter"
   | "missingCapitalLetter";
 
-const checkPasswordRequirement = (password: string, option?: PasswordRequirementOption): PasswordRequirementResult => {
+const checkPasswordRequirement = (
+  password: string,
+  option?: PasswordRequirementOption
+): PasswordRequirementResult => {
   if (option?.requireNumbers) {
     if (!/\d/.test(password)) {
       return "missingNumber";

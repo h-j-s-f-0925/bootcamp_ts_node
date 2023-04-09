@@ -7,14 +7,13 @@ setTimeout(() => {
   console.log("timeout"); // 2
 }, 0);
 
-
 //"promise" を表示
 //Promiseオブジェクトを生成し、その中でコンソールに"promise"を表示しています。setTimeoutのコールバック関数は、Promiseオブジェクトが完了するまで待機するため、resolve関数を呼び出すまで次の行の処理が進みません。
 new Promise<void>((resolve) => {
   console.log("promise"); // 3
 
   setTimeout(() => {
-      //Promiseオブジェクトが解決された後に "timeout-in-promise" を表示
+    //Promiseオブジェクトが解決された後に "timeout-in-promise" を表示
     console.log("timeout-in-promise"); // 4
     resolve();
   });
@@ -26,7 +25,6 @@ new Promise<void>((resolve) => {
 
 // "bottom" を表示
 console.log("bottom"); // 6
-
 
 //Promiseオブジェクトは非同期的に処理されるため、"promise"の表示や.then()の呼び出しは後回しになり、"timeout"はPromiseオブジェクトの完了を待たずに先に実行されたことがわかります。
 

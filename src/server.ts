@@ -1,31 +1,56 @@
-import http from "node:http";
+import http from "http";
+import fs from "fs";
+import path from "path";
+import { URL } from "url";
 
-//サーバーを生成
-const server = http.createServer();
+// const port = process.env.PORT || 12345;
+const port = process.env.PORT || 54321;
 
-// サーバーにリクエストがあった時に実行される処理を定義する
-server.on("request", async (req, res) => {
-  console.log("request url: ", req.url);
-  // Content-Type is important for browsers.
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+const server = http.createServer(async (req, res) => {
+  const reqUrl = new URL(req.url as string, `http://${req.headers.host}`);
+  // const reqPath = reqUrl.pathname;
+  const reqPath = reqUrl.pathname === "/" ? "/hello.html" : reqUrl.pathname;
 
-  // Content-Type はブラウザーに対して重要な情報であるため、設定する
-  res.writeHead(200, { "content-type": "text/plain" });
-  // レスポンスとして "hello!\n" を返す
-  res.write("hello!\n");
-  // レスポンスを終了する
-  res.end();
+  var filePath = path.join(__dirname.replace(/\/out$/, ""), "public", reqPath);
+  // console.log("filePath ", req.url);
+
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      res.writeHead(404, { "Content-Type": "text/plain" });
+      res.write("404 Not Found\n");
+      // console.log("filePath: " + filePath);
+      res.end();
+    } else {
+      let contentType = "text/plain";
+      const extname = path.extname(filePath);
+      // console.log("exname: " + extname);
+      switch (extname) {
+        case ".html":
+          contentType = "text/html";
+          break;
+        case ".jpg":
+          contentType = "image/jpeg";
+          // res.setHeader("Content-Type", "image/jpeg");
+          // console.log(contentType);
+          break;
+        case ".json":
+          contentType = "text/json";
+          break;
+        case ".ico":
+          contentType = "image/x-icon";
+          break;
+      }
+      res.writeHead(200, { "Content-Type": contentType });
+      res.write(data);
+      res.end();
+    }
+  });
 });
 
-// サーバーが起動した際に実行される処理を定義する
 server.on("listening", () => {
   console.log("start listening!");
 });
 
-
-// サーバーを localhost:12345 で起動する
-// Start listening 12345 port of localhost (127.0.0.1).
-server.listen(12345, () => {
-  console.log("listening on http://localhost:12345/");
+server.listen(port, () => {
+  console.log(`listening on http://localhost:${port}/`);
 });
-console.log("run server.js");

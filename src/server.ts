@@ -56,5 +56,3 @@ server.on("listening", () => {
 server.listen(port, () => {
   console.log(`listening on http://localhost:${port}/`);
 });
-
-console.log("run server.js");
